@@ -1,4 +1,4 @@
 Frozen
 ======
 
-A Freezer inventory app
+A Freezer inventory app.
