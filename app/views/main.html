@@ -1,23 +1,43 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+<div class="row">
+  <form class="form-inline">
+    <div class="form-group">
+      <label class="sr-only" for="descriptionInput">Description</label>
+      <input type="text" class="form-control" id="descriptionInput" placeholder="Item Description">
+  </div>
+  <div class="form-group">
+      <label class="sr-only" for="volumeInput">Item</label>
+      <input type="date" class="form-control" id="volumeInput" placeholder="Volume/Weight">
+  </div>
+  <div class="form-group">
+      <label class="sr-only" for="quantityInput">Item</label>
+      <input type="number" class="form-control" id="quantityInput" placeholder="Quantity">
+  </div>
+  <div class="form-group">
+      <label class="sr-only" for="expiresInput">Item</label>
+      <input type="date" class="form-control" id="expiresInput" placeholder="Expires">
+  </div>
+  <div class="form-group">
+      <label class="sr-only" for="addedInput">Item</label>
+      <input type="date" class="form-control" id="addedInput" placeholder="Added">
+  </div>
+  <button type="submit" class="btn btn-default">Add</button>
+</form>
 </div>
-
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+<div class="row">
+  <table class="table table-condensed">
+    <thead>
+      <th>Item</th>
+      <th>Volume/Weight</th>
+      <th>Qty.</th>
+      <th>Expires</th>
+      <th>Added</th>
+  </thead>
+  <tr ng-repeat="item in allItems">
+      <td>{{item.description}}</td>
+      <td>{{item.measurement}}</td>
+      <td>{{item.quantity}}</td>
+      <td>{{item.oldestExpirationDate}}</td>
+      <td>{{item.oldestAddedDate}}</td>
+  </tr>
+</table>
 </div>
