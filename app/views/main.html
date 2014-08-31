@@ -36,8 +36,8 @@
       <td>{{item.description}}</td>
       <td>{{item.measurement}}</td>
       <td>{{item.quantity}}</td>
-      <td>{{item.oldestExpirationDate}}</td>
-      <td>{{item.oldestAddedDate}}</td>
+      <td>{{item.oldestExpirationDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+      <td>{{item.oldestAddedDate | amDateFormat: 'MM/DD/YYYY'}}</td>
   </tr>
 </table>
 </div>
