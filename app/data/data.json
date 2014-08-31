@@ -1,0 +1,35 @@
+{
+	"items": [
+		{
+			"description": "Brocolli",
+			"measurement": "16oz",
+			"dates": {
+				"8/28/2014": "12/28/2014",
+				"8/27/2014": "12/27/2014" 
+			}
+		},
+		{
+			"description": "Chicken",
+			"measurement": "16oz",
+			"dates": {
+				"8/28/2014": "12/28/2015",
+				"8/29/2014": "12/29/2015" 
+			}
+		},
+		{
+			"description": "Beef",
+			"measurement": "32oz",
+			"dates": {
+				"9/28/2014": "1/28/2015",
+				"9/27/2014": "2/27/2015" 
+			}
+		},
+		{
+			"description": "Brocolli",
+			"measurement": "8oz",
+			"dates": {
+				"8/28/2014": "12/28/2014"
+			}
+		}
+	]
+}
