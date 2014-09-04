@@ -10,3 +10,39 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
+body {
+	padding-top: 70px;
+}
+
+header .container {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+header .navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+}
+
+header .navbar .navbar-collapse {
+    text-align: center;
+}
+
+tfoot {
+	border-top: 2px solid #DDD;
+	color: #999;
+}
+
+// header {
+// 	width: 100%;
+// 	background: #333;
+// 	padding: 10px 0;
+// }
+
+// header .center-block {
+// 	text-align: center;
+// }
+
+// header .center-block>span {
+// 	padding: 4px 10px;
+// }
