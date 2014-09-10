@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals $ */
+
 angular.module('frozenApp')
 	.directive('yellow', function(){
 		// Runs during compile
@@ -16,9 +18,18 @@ angular.module('frozenApp')
 			// replace: true,
 			// transclude: true,
 			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function(
-			               // $scope, element, attrs, controller
-			               ){
+			link: function($scope, element){
+				$(element).popover({
+					container: $(document.body),
+					placement: 'bottom',
+					title: 'Expiring Soon',
+					trigger: 'click', // focus hides the popover on the next click
+					html: true,
+					content: function() {
+						return $('#yellow-popover-content').html();
+					}
+					//  data-container="body" data-toggle="popover" data-placement="bottom" data-content="yellow-popover-content"
+				});
 			}
 		};
 	});

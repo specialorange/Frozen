@@ -14,8 +14,22 @@
 
         <div class="collapse navbar-collapse" id="header-navbar-collapse">
           <ul class="nav navbar-nav">
-            <button type="button" disabled="" class="btn navbar-btn btn-sm btn-success" green></button>
-            <button type="button" class="btn navbar-btn btn-sm btn-warning" yellow></button>
+            <button type="button" disabled="" class="btn navbar-btn btn-sm btn-success" green=""></button>
+            <a class="btn navbar-btn btn-sm btn-warning" yellow=""></a>
+            <div class="hidden row" id="yellow-popover-content">
+              <table class="table table-condensed">
+                <thead>
+                  <th>Item</th>
+                  <th>MM</th>
+                  <th>Expires On</th>
+                </thead>
+                <tr ng-repeat="item in yellow">
+                    <td class="col-md-6">{{item.description}}</td>
+                    <td class="col-md-2">{{item.measurement}}</td>
+                    <td class="col-md-4">{{item.expiration | amDateFormat: 'MM/DD/YYYY'}}</td>
+                </tr>
+              </table>
+            </div>
             <button type="button" class="btn navbar-btn btn-sm btn-danger" red=""></button>
           </ul>
         </div>
@@ -25,58 +39,62 @@
 
 <div class="container">
   <div class="row">
-    <form class="form-inline">
-      <div class="form-group col-md-4">
-          <label class="sr-only" for="descriptionInput">Description</label>
-          <input type="text" class="form-control" id="descriptionInput" placeholder="Item Description">
-      </div>
-      <div class="form-group col-md-2">
-          <label class="sr-only" for="volumeInput">Item</label>
-          <input type="date" class="form-control" id="volumeInput" placeholder="Volume/Weight">
-      </div>
-      <div class="form-group col-md-2">
-          <label class="sr-only" for="quantityInput">Item</label>
-          <input type="number" class="form-control" id="quantityInput" placeholder="Quantity">
-      </div>
-      <div class="form-group col-md-2">
-          <label class="sr-only" for="expiresInput">Item</label>
-          <input type="date" class="form-control" id="expiresInput" placeholder="Expires">
-      </div>
-      <div class="form-group col-md-1">
-          <label class="sr-only" for="addedInput">Item</label>
-          <input type="date" class="form-control" id="addedInput" placeholder="Added">
-      </div>
-      <div class="form-group col-md-1">
-        <button type="submit" class="btn btn-default glyphicon glyphicon-plus"></button>
-      </div>
-  </form>
+    
   </div>
 
   <div class="row">
     <table class="table table-condensed">
       <thead>
         <th>Item</th>
-        <th>Volume/Weight</th>
+        <th>Measurement</th>
         <th>Qty.</th>
         <th>Expires</th>
         <th>Added</th>
-    </thead>
-    <tr ng-repeat="item in allItems">
-        <td class="col-md-4">{{item.description}}</td>
-        <td class="col-md-2">{{item.measurement}}</td>
-        <td class="col-md-2">{{item.quantity}}</td>
-        <td class="col-md-2">{{item.oldestExpirationDate | amDateFormat: 'MM/DD/YYYY'}}</td>
-        <td class="col-md-2">{{item.oldestAddedDate | amDateFormat: 'MM/DD/YYYY'}}</td>
-    </tr>
-    <tfoot>
+        <th></th>
+      </thead>
       <tr>
-        <td>Old item</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
+        <form class="form-inline" id="new-item-form">
+          <td class="form-group col-md-4">
+              <label class="sr-only" for="descriptionInput">Description</label>
+              <input type="text" class="form-control" id="descriptionInput" placeholder="Item Description">
+          </td>
+          <td class="form-group col-md-2">
+              <label class="sr-only" for="measurementInput">Measurement</label>
+              <input type="date" class="form-control" id="measurementInput" placeholder="Measurement">
+          </td>
+          <td class="form-group col-md-2">
+              <label class="sr-only" for="quantityInput">Quantity</label>
+              <input type="number" class="form-control" id="quantityInput" placeholder="Quantity">
+          </td>
+          <td class="form-group col-md-2">
+              <label class="sr-only" for="expiresInput">Expires</label>
+              <input type="date" class="form-control" id="expiresInput" placeholder="Expires">
+          </td>
+          <td class="form-group col-md-1">
+              <label class="sr-only" for="addedInput">Added</label>
+              <input type="date" class="form-control" id="addedInput" placeholder="Added">
+          </td>
+          <td class="form-group col-md-1">
+            <button type="submit" class="btn btn-default glyphicon glyphicon-plus"></button>
+          </td>
+        </form>
       </tr>
-    </tfoot>
-  </table>
+      <tr ng-repeat="item in allItems" ng-class="{'bg-danger': item.isRed()}">
+          <td class="col-md-4">{{item.description}}</td>
+          <td class="col-md-2">{{item.measurement}}</td>
+          <td class="col-md-2">{{item.quantity}}</td>
+          <td class="col-md-2">{{item.oldestExpirationDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+          <td class="col-md-2">{{item.oldestAddedDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+      </tr>
+      <tfoot>
+<!--         <tr ng-repeat="item in history">
+          <td class="col-md-4">{{item.description}}</td>
+          <td class="col-md-2">{{item.measurement}}</td>
+          <td class="col-md-2">{{item.quantity}}</td>
+          <td class="col-md-2">{{item.oldestExpirationDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+          <td class="col-md-2">{{item.oldestAddedDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+        </tr> -->
+      </tfoot>
+    </table>
   </div>
 </div>

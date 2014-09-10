@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals moment */
+/* globals moment, $ */
 
 angular.module('frozenApp')
 	.factory('ExpirationMatchingService', [function(){
@@ -11,7 +11,25 @@ angular.module('frozenApp')
 				var green = [];
 				var yellow = [];
 				var red = [];
+				var unexpired = [];
+				var expired = [];
 				var item, currentItem, expiration;
+
+				function ItemModel(description, measurement, expiration, added) {
+					this.description = description;
+					this.measurement = measurement;
+					this.expiration = expiration;
+					this.added = added;
+					this.isRed = function() {
+						return (this.expiration.isSame(now) || this.expiration.isBefore(now));
+					};
+					this.isYellow = function() {
+						return ((this.expiration.isBefore(twoWeeksFromToday) || this.expiration.isSame(twoWeeksFromToday)) && this.expiration.isAfter(now));
+					};
+					this.isGreen = function() {
+						return (this.expiration.isAfter(twoWeeksFromToday));
+					};
+				}
 
 				for (var i = 0; i < items.length; i++) {
 					currentItem = items[i];
@@ -19,12 +37,8 @@ angular.module('frozenApp')
 					// loop through the expiration dates
 					for (var added in currentItem.dates) {
 					    expiration = moment(currentItem.dates[added]);
-					    item = {
-					    	description: currentItem.description,
-					    	measurement: currentItem.measurement,
-					    	expiration: expiration.format('MM/DD/YYYY'),
-					    	added: added
-					    };
+
+					    item = new ItemModel(currentItem.description, currentItem.measurement, expiration, added);
 
 					    // if (expiration.isBefore(twoWeeksFromToday)) {
 					    // 	green.push(item);
@@ -35,13 +49,30 @@ angular.module('frozenApp')
 					    // } else {
 					    // 	throw 'item ' + item + ' did not match any list';
 					    // }
-					    if (expiration.isSame(now) || expiration.isBefore(now)) {
+					    if (item.isRed()) {
 					    	red.push(item);
-					    } else if ((expiration.isBefore(twoWeeksFromToday) || expiration.isSame(twoWeeksFromToday)) && expiration.isAfter(now)) {
+					    	if ($.inArray(currentItem, expired) === -1) { expired.push(currentItem); }
+					    } else if (item.isYellow()) {
 					    	yellow.push(item);
-					    } else if (expiration.isAfter(twoWeeksFromToday)) {
+					    	if ($.inArray(currentItem, unexpired) === -1) { unexpired.push(currentItem); }
+					    } else if (item.isGreen()) {
 					    	green.push(item);
+					    	if ($.inArray(currentItem, unexpired) === -1) { unexpired.push(currentItem); }
+					    } else {
+					    	throw 'item ' + item + 'did not match any list';
 					    }
+
+					    // if (expiration.isSame(now) || expiration.isBefore(now)) {
+					    // 	red.push(item);
+					    // 	if ($.inArray(currentItem, expired) === -1) { expired.push(currentItem); }
+					    // } else if ((expiration.isBefore(twoWeeksFromToday) || expiration.isSame(twoWeeksFromToday)) && expiration.isAfter(now)) {
+					    // 	yellow.push(item);
+					    // 	// $.inArray is a polyfill, returns -1 if not found in the array
+					    // 	if ($.inArray(currentItem, unexpired) === -1) { unexpired.push(currentItem); }
+					    // } else if (expiration.isAfter(twoWeeksFromToday)) {
+					    // 	green.push(item);
+					    // 	if ($.inArray(currentItem, unexpired) === -1) { unexpired.push(currentItem); }
+					    // }
 					}
 
 				}
@@ -49,7 +80,9 @@ angular.module('frozenApp')
 				return {
 					green: green,
 					yellow: yellow,
-					red: red
+					red: red,
+					unexpired: unexpired,
+					expired: expired
 				};
 			}
 		};

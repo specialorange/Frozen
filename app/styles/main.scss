@@ -20,17 +20,35 @@ header .container {
 }
 
 header .navbar .navbar-nav {
-    display: inline-block;
-    float: none;
+  display: inline-block;
+  float: none;
 }
 
 header .navbar .navbar-collapse {
-    text-align: center;
+  text-align: center;
 }
 
 tfoot {
 	border-top: 2px solid #DDD;
 	color: #999;
+}
+
+.popover {
+    max-width: 600px;
+    width: auto;
+}
+
+#new-item-form .form-control {
+    width: 100%;
+}
+
+#new-item-form > div {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#new-item-form .btn {
+    position: static;
 }
 
 // header {

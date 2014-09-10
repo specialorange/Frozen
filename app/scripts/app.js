@@ -9,26 +9,26 @@
  * Main module of the application.
  */
 angular
-  .module('frozenApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'angularMoment'
-  ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      // .when('/about', {
-      //   templateUrl: 'views/about.html',
-      //   controller: 'AboutCtrl'
-      // })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+	.module('frozenApp', [
+		'ngAnimate',
+		'ngCookies',
+		'ngResource',
+		'ngRoute',
+		'ngSanitize',
+		'ngTouch',
+		'angularMoment'
+	])
+	.config(function ($routeProvider) {
+		$routeProvider
+			.when('/', {
+				templateUrl: 'views/main.html',
+				controller: 'MainCtrl'
+			})
+			// .when('/about', {
+			//   templateUrl: 'views/about.html',
+			//   controller: 'AboutCtrl'
+			// })
+			.otherwise({
+				redirectTo: '/'
+			});
+	});

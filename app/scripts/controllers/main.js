@@ -51,6 +51,9 @@ angular.module('frozenApp')
             $scope.yellow = lists.yellow;
             $scope.red = lists.red;
 
+            $scope.unexpired = lists.unexpired;
+            $scope.expired = lists.expired;
+
             $scope.allItems = data.items;
         });
     } ]);
