@@ -1,27 +1,54 @@
+<header>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Frozen</a> -->
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+          <ul class="nav navbar-nav">
+            <button type="button" disabled="" class="btn navbar-btn btn-sm btn-success">{{green.length}}</button>
+            <button type="button" class="btn navbar-btn btn-sm btn-warning">{{yellow.length}}</button>
+            <button type="button" class="btn navbar-btn btn-sm btn-danger">{{red.length}}</button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
 <div class="container">
   <div class="row">
     <form class="form-inline">
-      <div class="form-group">
-        <label class="sr-only" for="descriptionInput">Description</label>
-        <input type="text" class="form-control" id="descriptionInput" placeholder="Item Description">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="volumeInput">Item</label>
-        <input type="date" class="form-control" id="volumeInput" placeholder="Volume/Weight">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="quantityInput">Item</label>
-        <input type="number" class="form-control" id="quantityInput" placeholder="Quantity">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="expiresInput">Item</label>
-        <input type="date" class="form-control" id="expiresInput" placeholder="Expires">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="addedInput">Item</label>
-        <input type="date" class="form-control" id="addedInput" placeholder="Added">
-    </div>
-    <button type="submit" class="btn btn-default">Add</button>
+      <div class="form-group col-md-4">
+          <label class="sr-only" for="descriptionInput">Description</label>
+          <input type="text" class="form-control" id="descriptionInput" placeholder="Item Description">
+      </div>
+      <div class="form-group col-md-2">
+          <label class="sr-only" for="volumeInput">Item</label>
+          <input type="date" class="form-control" id="volumeInput" placeholder="Volume/Weight">
+      </div>
+      <div class="form-group col-md-2">
+          <label class="sr-only" for="quantityInput">Item</label>
+          <input type="number" class="form-control" id="quantityInput" placeholder="Quantity">
+      </div>
+      <div class="form-group col-md-2">
+          <label class="sr-only" for="expiresInput">Item</label>
+          <input type="date" class="form-control" id="expiresInput" placeholder="Expires">
+      </div>
+      <div class="form-group col-md-1">
+          <label class="sr-only" for="addedInput">Item</label>
+          <input type="date" class="form-control" id="addedInput" placeholder="Added">
+      </div>
+      <div class="form-group col-md-1">
+        <button type="submit" class="btn btn-default glyphicon glyphicon-plus"></button>
+      </div>
   </form>
   </div>
 
@@ -35,11 +62,11 @@
         <th>Added</th>
     </thead>
     <tr ng-repeat="item in allItems">
-        <td>{{item.description}}</td>
-        <td>{{item.measurement}}</td>
-        <td>{{item.quantity}}</td>
-        <td>{{item.oldestExpirationDate | amDateFormat: 'MM/DD/YYYY'}}</td>
-        <td>{{item.oldestAddedDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+        <td class="col-md-4">{{item.description}}</td>
+        <td class="col-md-2">{{item.measurement}}</td>
+        <td class="col-md-2">{{item.quantity}}</td>
+        <td class="col-md-2">{{item.oldestExpirationDate | amDateFormat: 'MM/DD/YYYY'}}</td>
+        <td class="col-md-2">{{item.oldestAddedDate | amDateFormat: 'MM/DD/YYYY'}}</td>
     </tr>
     <tfoot>
       <tr>

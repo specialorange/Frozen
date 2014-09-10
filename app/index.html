@@ -20,32 +20,8 @@
 	  <![endif]-->
 
 	  <!-- Add your site or application content here -->
-	<header>
-		<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- <a class="navbar-brand" href="#">Frozen</a> -->
-				</div>
-
-
-
-				<div class="collapse navbar-collapse" id="header-navbar-collapse">
-					<ul class="nav navbar-nav">
-						<button type="button" class="btn navbar-btn btn-sm btn-success">Default</button>
-						<button type="button" class="btn navbar-btn btn-sm btn-warning">Default</button>
-						<button type="button" class="btn navbar-btn btn-sm btn-danger">Default</button>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
 	<div ng-view=""></div>
+
 	<footer class="container-fluid">
 		
 	</footer>
@@ -101,8 +77,8 @@
 	<script src="scripts/app.js"></script>
 	<script src="scripts/controllers/main.js"></script>
 	<!-- // <script src="scripts/controllers/about.js"></script> -->
-	<script src="scripts/controllers/header.js"></script>
-	<script src="scripts/factories/itemService.js"></script>
+	<script src="scripts/providers/ItemService.js"></script>
+	<script src="scripts/providers/ExpirationMatchingService.js"></script>
 	<!-- endbuild -->
 </body>
 </html>

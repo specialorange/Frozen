@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals moment */
+
 /**
  * @ngdoc function
  * @name frozenApp.controller:MainCtrl
@@ -8,10 +10,10 @@
  * Controller of the frozenApp
  */
 angular.module('frozenApp')
-  .controller('MainCtrl', [ '$scope', 'ItemService', function ($scope, ItemService) {
+  .controller('MainCtrl', [ '$scope', 'ItemService', 'ExpirationMatchingService', function ($scope, ItemService, ExpirationMatchingService) {
     ItemService.getItems()
         .then(function(data) {
-            var moment = window.moment;
+            // var moment = window.moment;
 
             // loop through the items
             for (var i = 0; i < data.items.length; i++) {
@@ -24,8 +26,8 @@ angular.module('frozenApp')
                     quantity++;
 
                     // parse the dates with moment.js
-                    expiration = moment(key, 'MM/DD/YYYY');
-                    added = moment(item.dates[key], 'MM/DD/YYYY');
+                    added = moment(key, 'MM/DD/YYYY');
+                    expiration = moment(item.dates[key], 'MM/DD/YYYY');
 
                     // set the dates to the first if it's not there yet
                     if (!item.oldestExpirationDate) {
@@ -38,11 +40,18 @@ angular.module('frozenApp')
                         item.oldestAddedDate = added;
                     }
                 }
+
                 item.quantity = quantity;
             }
-            // for (var item in data.items) {
-                
-            // }
+            
+            // match the items to ok, expires soon, and expired lists
+            var lists = ExpirationMatchingService.match(data.items);
+            console.log(lists);
+
+            $scope.green = lists.green;
+            $scope.yellow = lists.yellow;
+            $scope.red = lists.red;
+
             $scope.allItems = data.items;
         });
-  } ]);
+    } ]);
