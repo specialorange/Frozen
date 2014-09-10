@@ -46,7 +46,6 @@ angular.module('frozenApp')
             
             // match the items to ok, expires soon, and expired lists
             var lists = ExpirationMatchingService.match(data.items);
-            console.log(lists);
 
             $scope.green = lists.green;
             $scope.yellow = lists.yellow;

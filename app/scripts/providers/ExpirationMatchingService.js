@@ -26,8 +26,6 @@ angular.module('frozenApp')
 					    	added: added
 					    };
 
-					    console.log(expiration);
-
 					    // if (expiration.isBefore(twoWeeksFromToday)) {
 					    // 	green.push(item);
 					    // } else if ((expiration.isSame(twoWeeksFromToday) || expiration.isAfter(twoWeeksFromToday)) && expiration.isBefore(now)) {
