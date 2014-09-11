@@ -1,0 +1,40 @@
+{
+    "items": [
+
+        {
+            "description": "Brocolli (1 of ea. expiry type)",
+            "measurement": "16oz",
+            "dates": {
+                "7/1/2014": "12/1/2015",
+                "8/1/2014": "9/20/2014",
+                "8/2/2014": "12/1/2010" 
+            }
+        },
+
+        {
+            "description": "Chicken (1 ok expiry)",
+            "measurement": "16oz",
+            "dates": {
+                "8/3/2014": "12/1/2015"
+            }
+        },
+
+        {
+            "description": "Beef (1 soon expiry)",
+            "measurement": "32oz",
+            "dates": {
+                "8/4/2014": "9/21/2014"
+            }
+        },
+
+        {
+            "description": "Uncrustables (1 expired, 1 ok)",
+            "measurement": "32oz",
+            "dates": {
+                "8/6/2014": "12/1/2010",
+                "8/7/2014": "12/1/2014" 
+            }
+        }
+
+    ]
+}
