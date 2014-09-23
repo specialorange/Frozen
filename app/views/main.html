@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <!-- <a class="navbar-brand" href="#">Frozen</a> -->
+          <a class="navbar-brand" href="#">Frozen</a>
         </div>
 
 
@@ -23,10 +23,10 @@
                   <th>MM</th>
                   <th>Expires On</th>
                 </thead>
-                <tr ng-repeat="item in yellow">
+                <tr ng-repeat="item in items | itemFilter | yellowItems">
                     <td class="col-md-6">{{item.description}}</td>
                     <td class="col-md-2">{{item.measurement}}</td>
-                    <td class="col-md-4">{{item.expiration | amDateFormat: 'MM/DD/YYYY'}}</td>
+                    <td class="col-md-4">{{item.expires | amDateFormat: 'MM/DD/YYYY'}}</td>
                 </tr>
               </table>
             </div>
@@ -76,10 +76,10 @@
             </td>
           </form>
         </tr>
-        <tr ng-repeat="item in data.items" ng-class="{'bg-danger': item.isRed()}">
+        <tr ng-repeat="item in collectedItems" ng-class="{'bg-warning': item.isYellow(), 'bg-danger': item.isRed()}">
             <td class="col-md-4">{{item.description}}</td>
             <td class="col-md-2">{{item.measurement}}</td>
-            <td class="col-md-2">Not implemented</td>
+            <td class="col-md-2">{{item.quantity}}</td>
             <td class="col-md-2">{{item.expires | amDateFormat: 'MM/DD/YYYY'}}</td>
             <td class="col-md-2">{{item.added | amDateFormat: 'MM/DD/YYYY'}}</td>
         </tr>
@@ -95,37 +95,37 @@
       </table>
     </div>
     <div class="col-md-4">
-      <form class="form-inline" style="width: 100%">
-        <div class="list-group">
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading">Filter</h4>
-            <p class="list-group-item-text form-group"><strong>Contains</strong> <input type="text" class="form-control" id="" placeholder="Text"></p>
-            <p class="list-group-item-text form-group"><strong>Expires</strong> from <input type="text" class="form-control" id="" placeholder="Start"> to <input type="text" class="form-control" id="" placeholder="End"></p>
-            <p class="list-group-item-text form-group"><strong>Added</strong> from <input type="text" class="form-control" id="" placeholder="Start"> to <input type="text" class="form-control" id="" placeholder="End"></p>
-            <p class="list-group-item-text form-group"><strong>Quantity</strong> from <input type="text" class="form-control" id="" placeholder="Minimum"> to <input type="text" class="form-control" id="" placeholder="Maximum"></p>
+  <form class="form-inline" style="width: 100%">
+    <div class="list-group">
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">Filter</h4>
+        <p class="list-group-item-text form-group"><strong>Contains</strong> <input type="text" class="form-control" id="" placeholder="Text"></p>
+        <p class="list-group-item-text form-group"><strong>Expires</strong> from <input type="text" class="form-control" id="" placeholder="Start"> to <input type="text" class="form-control" id="" placeholder="End"></p>
+        <p class="list-group-item-text form-group"><strong>Added</strong> from <input type="text" class="form-control" id="" placeholder="Start"> to <input type="text" class="form-control" id="" placeholder="End"></p>
+        <p class="list-group-item-text form-group"><strong>Quantity</strong> from <input type="text" class="form-control" id="" placeholder="Minimum"> to <input type="text" class="form-control" id="" placeholder="Maximum"></p>
+      </div>
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">Sort</h4>
+        <p class="list-group-item-text"><strong>Expires</strong>
+          <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+              <input type="radio" name="options" id="option1" checked> Ascending (preselected)
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="options" id="option2"> Descending
+            </label>
           </div>
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading">Sort</h4>
-            <p class="list-group-item-text"><strong>Expires</strong>
-              <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                  <input type="radio" name="options" id="option1" checked> Ascending (preselected)
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="options" id="option2"> Descending
-                </label>
-              </div>
-            </p>
-          </div>
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading">Display</h4>
-            <p class="list-group-item-text"><button type="button" class="btn btn-primary" data-toggle="button">Group like items</button></p>
-            <p></p>
-            <p class="list-group-item-text"><button type="button" class="btn btn-primary" data-toggle="button">Detailed view</button></p>
-            <p></p>
-          </div>
-        </div>
-      </form>
+        </p>
+      </div>
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">Display</h4>
+        <p class="list-group-item-text"><button type="button" class="btn btn-primary" data-toggle="button">Group like items</button></p>
+        <p></p>
+        <p class="list-group-item-text"><button type="button" class="btn btn-primary" data-toggle="button">Detailed view</button></p>
+        <p></p>
+      </div>
     </div>
+  </form>
+</div>
   </div>
 </div>
