@@ -17,8 +17,29 @@ angular.module('frozenApp')
     var sync = $firebase(fireRef);
 
     $scope.items = sync.$asArray();
-
     window.items = $scope.items;
+    window.$$$scope = $scope;
+
+    $scope.addItem = function() {
+        var item = {
+            description: $scope.newDescription.trim(),
+            measurement: $scope.newMeasurement.trim(),
+            quantity: $scope.newQuantity,
+            expires: $scope.newExpires.trim(),
+            added: $scope.newAdded.trim()
+        };
+        
+        if (!$scope.newDescription.length || !$scope.newMeasurement.length || $scope.newQuantity === 0|| !$scope.newExpires.length ||!$scope.newAdded.length) {
+            return;
+        }
+        $scope.items.$add(item);
+        // $scope.new-description = '';
+        // $scope.new-measurement = '';
+        // $scope.new-quantity = '';
+        // $scope.new-expires = '';
+        // $scope.new-added = '';
+    };
+
     $scope.items.$loaded().then(function(items) {
 
         var collectedItems = [];
@@ -52,6 +73,22 @@ angular.module('frozenApp')
             addItem: function(item) {
                 this.items.push(item);
                 this.quantity++;
+
+                // set the dates to the first if it's not there yet
+                    //                 if (!item.oldestExpirationDate) {
+                    //                     item.oldestExpirationDate = expiration;
+                    //                     item.oldestAddedDate = added;
+                    //                 }
+
+                    //                 if (expiration.isBefore(item.oldestExpirationDate)) {
+                    //                     item.oldestExpirationDate = expiration;
+                    //                     item.oldestAddedDate = added;
+                    //                 }
+                    //             }
+                if (moment(item.expires).isBefore(this.expires)) {
+                    this.expires = item.expires;
+                    this.added = item.added;
+                }
             },
 
             isRed: function() {
@@ -226,94 +263,6 @@ angular.module('frozenApp')
             // console.log(items);
 
             // return items;
-
-        };
-    })
-    .filter('collectedItemFilter', function () {
-        return function (input) {
-
-            var collectedItems = [];
-
-            var now = moment();
-            var twoWeeksFromToday = moment(now).add('days', 14);
-
-            /**
-             * CollectedItem class
-             * represents an item type with several items that match the type
-             * e.g. Brocolli 16oz would be a type
-             */
-
-            function CollectedItem(item) {
-                this.description = item.description;
-                this.measurement = item.measurement;
-                this.expires = item.expires;
-                this.added = item.added;
-
-                this.quantity = 0;
-                this.items = [];
-
-                this.addItem(item);
-            }
-
-            CollectedItem.prototype = {
-                matches: function(item) {
-                    return ((item.description === this.description) && (item.measurement === this.measurement));
-                },
-
-                addItem: function(item) {
-                    this.items.push(item);
-                    this.quantity++;
-                    console.log(this.quantity);
-                },
-
-                isRed: function() {
-                    var isRed = false;
-                    angular.forEach(this.items, function(item) {
-                        if (moment(item.expires).isSame(now) || moment(item.expires).isBefore(now)) {
-                            isRed = true;
-                        }
-                    });
-                    console.log(this + ' is not red');
-                    return isRed;
-                },
-
-                isYellow: function() {
-                    var isYellow = false;
-                    angular.forEach(this.items, function(item) {
-                        if ((moment(item.expires).isBefore(twoWeeksFromToday) || moment(item.expires).isSame(twoWeeksFromToday)) && moment(item.expires).isAfter(now)) {
-                            isYellow = true;
-                        }
-                    });
-                    return isYellow;
-                },
-
-                isGreen: function() {
-                    var isGreen = false;
-                    angular.forEach(this.items, function(item) {
-                        if (moment(item.expires).isAfter(twoWeeksFromToday)) {
-                            isGreen = true;
-                        }
-                    });
-                    return isGreen;
-                }
-            };
-
-            var collected = false;
-
-            angular.forEach(input, function(item) {
-                collected = false;
-                angular.forEach(collectedItems, function(collectedItem) {
-                    if (collectedItem.matches(item)) {
-                        collectedItem.addItem(item);
-                        collected = true;
-                    }
-                });
-                if (!collected) {
-                    collectedItems.push(new CollectedItem(item));
-                }
-            });
-
-            return collectedItems;
 
         };
     });

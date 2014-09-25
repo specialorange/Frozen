@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Frozen</a>
+          <!-- <a class="navbar-brand" href="#">Frozen</a> -->
         </div>
 
 
@@ -50,29 +50,29 @@
           <th></th>
         </thead>
         <tr>
-          <form class="form-inline" id="new-item-form">
+          <form class="form-inline" id="new-item-form" ng-submit="addItem()">
             <td class="form-group col-md-3">
                 <label class="sr-only" for="descriptionInput">Description</label>
-                <input type="text" class="form-control" id="descriptionInput" placeholder="Item Description">
+                <input type="text" class="form-control" id="descriptionInput" ng-model="newDescription" placeholder="Item Description">
             </td>
             <td class="form-group col-md-2">
                 <label class="sr-only" for="measurementInput">Measurement</label>
-                <input type="date" class="form-control" id="measurementInput" placeholder="Measurement">
+                <input type="date" class="form-control" id="measurementInput" ng-model="newMeasurement" placeholder="Measurement">
             </td>
             <td class="form-group col-md-2">
                 <label class="sr-only" for="quantityInput">Quantity</label>
-                <input type="number" class="form-control" id="quantityInput" placeholder="Quantity">
+                <input type="number" class="form-control" id="quantityInput" ng-model="newQuantity" placeholder="Quantity">
             </td>
             <td class="form-group col-md-2">
                 <label class="sr-only" for="expiresInput">Expires</label>
-                <input type="date" class="form-control" id="expiresInput" placeholder="Expires">
+                <input type="date" class="form-control" id="expiresInput" ng-model="newExpires" placeholder="Expires">
             </td>
             <td class="form-group col-md-2">
                 <label class="sr-only" for="addedInput">Added</label>
-                <input type="date" class="form-control" id="addedInput" placeholder="Added">
+                <input type="date" class="form-control" id="addedInput" ng-model="newAdded" placeholder="Added">
             </td>
             <td class="form-group col-md-1">
-              <button type="submit" class="btn btn-default glyphicon glyphicon-plus"></button>
+              <button type="submit" ng-click="addItem()" class="btn btn-default glyphicon glyphicon-plus"></button>
             </td>
           </form>
         </tr>
