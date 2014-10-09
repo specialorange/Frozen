@@ -55,6 +55,9 @@ tfoot {
     position: static;
 }
 
+table.table tr td div.item-actions { display:none;}
+table.table tr:hover td div.item-actions { display:inline-block;}
+
 // header {
 // 	width: 100%;
 // 	background: #333;

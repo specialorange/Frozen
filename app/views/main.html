@@ -19,7 +19,7 @@
             <div class="hidden row" id="yellow-popover-content">
               <table class="table table-condensed">
                 <thead>
-                  <th>Item</th>
+                  <th>Item</th> 
                   <th>MM</th>
                   <th>Expires On</th>
                 </thead>
@@ -44,9 +44,9 @@
         <thead>
           <th>Item</th>
           <th>Measurement</th>
-          <th>Qty.</th>
           <th>Expires</th>
           <th>Added</th>
+          <th></th>
           <th></th>
         </thead>
         <tr>
@@ -60,10 +60,6 @@
                 <input type="date" class="form-control" id="measurementInput" ng-model="newMeasurement" placeholder="Measurement">
             </td>
             <td class="form-group col-md-2">
-                <label class="sr-only" for="quantityInput">Quantity</label>
-                <input type="number" class="form-control" id="quantityInput" ng-model="newQuantity" placeholder="Quantity">
-            </td>
-            <td class="form-group col-md-2">
                 <label class="sr-only" for="expiresInput">Expires</label>
                 <input type="date" class="form-control" id="expiresInput" ng-model="newExpires" placeholder="Expires">
             </td>
@@ -71,17 +67,30 @@
                 <label class="sr-only" for="addedInput">Added</label>
                 <input type="date" class="form-control" id="addedInput" ng-model="newAdded" placeholder="Added">
             </td>
-            <td class="form-group col-md-1">
+            <td class="form-group col-md-3">
               <button type="submit" ng-click="addItem()" class="btn btn-default glyphicon glyphicon-plus"></button>
             </td>
           </form>
         </tr>
-        <tr ng-repeat="item in collectedItems" ng-class="{'bg-warning': item.isYellow(), 'bg-danger': item.isRed()}">
-            <td class="col-md-4">{{item.description}}</td>
-            <td class="col-md-2">{{item.measurement}}</td>
-            <td class="col-md-2">{{item.quantity}}</td>
-            <td class="col-md-2">{{item.expires | amDateFormat: 'MM/DD/YYYY'}}</td>
-            <td class="col-md-2">{{item.added | amDateFormat: 'MM/DD/YYYY'}}</td>
+        <tr ng-repeat="item in items">
+          <form editable-form name="rowform">
+            <td class="col-md-4">
+              <span editable-text="item.data.description" e-name="description" e-form="rowform" e-required>
+                {{ item.description() || 'empty' }}
+              </span>
+            </td>
+            <td class="col-md-2">{{item.measurement()}}</td>
+            <td class="col-md-2">{{item.expires() | amDateFormat: 'MM/DD/YYYY'}} <span style="font-size: 200%; line-height: 50%; vertical-align: middle;" ng-class="{'text-warning': item.isYellow(), 'text-danger': item.isRed(), 'hidden': item.isGreen()}">&bull;</span></td>
+            <td class="col-md-2">{{item.added() | amDateFormat: 'MM/DD/YYYY'}}</td>
+            <td class="col-md-2">
+              <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-minus" ng-click="removeItem(item)"></button>
+              <div class="item-actions">
+                <small><a href="#">Duplicate</a></small>&nbsp;
+                <small><a href="#" ng-click="rowform.$show()">Edit</a></small>
+              </div>
+            </td>
+            <td class="col-md-1"></td>
+          </form>
         </tr>
         <tfoot>
       <!--         <tr ng-repeat="item in history">

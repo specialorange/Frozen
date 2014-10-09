@@ -8,6 +8,7 @@
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<!-- build:css(.) styles/vendor.css -->
 	<!-- bower:css -->
+	<link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
 	<!-- endbower -->
 	<!-- endbuild -->
 	<!-- build:css(.tmp) styles/main.css -->
@@ -71,14 +72,19 @@
 	<script src="bower_components/moment/moment.js"></script>
 	<script src="bower_components/angular-moment/angular-moment.js"></script>
 	<script src="bower_components/firebase/firebase.js"></script>
+	<script src="bower_components/firebase-simple-login/firebase-simple-login.js"></script>
+	<script src="bower_components/mockfirebase/dist/mockfirebase.js"></script>
 	<script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+	<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 	<!-- endbower -->
 	<!-- endbuild -->
 
 	<!-- build:js({.tmp,app}) scripts/scripts.js -->
 	<script src="scripts/app.js"></script>
 	<!-- // <script src="scripts/controllers/about.js"></script> -->
-	<script src="scripts/providers/ItemService.js"></script>
+	<script src="scripts/providers/Item.js"></script>
+	<script src="scripts/providers/ItemArray.js"></script>
+	<script src="scripts/providers/ItemFactory.js"></script>
 	<script src="scripts/providers/ExpirationMatchingService.js"></script>
 	<script src="scripts/directives/red.js"></script>
 	<script src="scripts/directives/yellow.js"></script>

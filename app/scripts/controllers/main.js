@@ -10,13 +10,13 @@
  * Controller of the frozenApp
  */
 angular.module('frozenApp')
-  .controller('MainCtrl', [ '$scope', '$firebase', function ($scope, $firebase) {
+  .controller('MainCtrl', [ '$scope', '$firebase', 'Item', 'ItemArray', 'ItemFactory', function ($scope, $firebase, Item, ItemArray, ItemFactory) {
 
-    var url = 'https://frozenapp.firebaseio.com/items/';
-    var fireRef = new Firebase(url);
-    var sync = $firebase(fireRef);
+    window.Item = Item;
+    window.ItemArray = ItemArray;
 
-    $scope.items = sync.$asArray();
+    $scope.items = ItemFactory;
+
     window.items = $scope.items;
     window.$$$scope = $scope;
 
@@ -24,12 +24,11 @@ angular.module('frozenApp')
         var item = {
             description: $scope.newDescription.trim(),
             measurement: $scope.newMeasurement.trim(),
-            quantity: $scope.newQuantity,
             expires: $scope.newExpires.trim(),
             added: $scope.newAdded.trim()
         };
         
-        if (!$scope.newDescription.length || !$scope.newMeasurement.length || $scope.newQuantity === 0|| !$scope.newExpires.length ||!$scope.newAdded.length) {
+        if (!$scope.newDescription.length || !$scope.newMeasurement.length || !$scope.newExpires.length ||!$scope.newAdded.length) {
             return;
         }
         $scope.items.$add(item);
@@ -39,6 +38,13 @@ angular.module('frozenApp')
         // $scope.new-expires = '';
         // $scope.new-added = '';
     };
+
+    $scope.removeItem = function(item) {
+        console.log(item);
+        $scope.items.$remove(item);
+    };
+
+    /* OLD CODE BELOW THIS LINE */
 
     $scope.items.$loaded().then(function(items) {
 

@@ -17,7 +17,8 @@ angular
 		'ngSanitize',
 		'ngTouch',
 		'angularMoment',
-		'firebase'
+		'firebase',
+		'xeditable'
 	])
 	.config(function ($routeProvider) {
 		$routeProvider

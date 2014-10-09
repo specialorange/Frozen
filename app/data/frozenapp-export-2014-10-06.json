@@ -1,0 +1,58 @@
+{
+  "items" : {
+    "0" : {
+      "added" : "7/1/2014",
+      "description" : "Brocolli (1 of ea. expiry type)",
+      "expires" : "12/1/2015",
+      "measurement" : "16oz"
+    },
+    "1" : {
+      "added" : "8/1/2014",
+      "description" : "Brocolli (1 of ea. expiry type)",
+      "expires" : "10/1/2014",
+      "measurement" : "16oz"
+    },
+    "2" : {
+      "added" : "8/2/2014",
+      "description" : "Brocolli (1 of ea. expiry type)",
+      "expires" : "12/1/2010",
+      "measurement" : "16oz"
+    },
+    "3" : {
+      "added" : "8/3/2014",
+      "description" : "Chicken (1 ok expiry)",
+      "expires" : "12/1/2015",
+      "measurement" : "16oz"
+    },
+    "4" : {
+      "added" : "8/4/2014",
+      "description" : "Beef (1 soon expiry)",
+      "expires" : "10/1/2014",
+      "measurement" : "32oz"
+    },
+    "5" : {
+      "added" : "8/6/2014",
+      "description" : "Uncrustables (1 expired, 1 ok)",
+      "expires" : "12/1/2010",
+      "measurement" : "32oz"
+    },
+    "6" : {
+      "added" : "8/7/2014",
+      "description" : "Uncrustables (1 expired, 1 ok)",
+      "expires" : "12/1/2014",
+      "measurement" : "32oz"
+    },
+    "-JYHB-q-_imWpY80lyny" : {
+      "added" : "10/02/2014",
+      "description" : "Test Item 1",
+      "expires" : "10/10/2014",
+      "measurement" : "16oz"
+    },
+    "-JYHOrbm5ylas_0u37kO" : {
+      "added" : "10/10/2014",
+      "description" : "Item 1",
+      "expires" : "10/10/2014",
+      "measurement" : "16oz"
+    }
+  }
+}
