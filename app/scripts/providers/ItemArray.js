@@ -5,9 +5,7 @@ angular.module('frozenApp')
 	return $FirebaseArray.$extendFactory({
 		// change the added behavior to return Item objects
 		$$added: function(snapshot) {
-				
-			console.log(item);
-			console.log(item.isRed());
+			var item = new Item(snapshot);
 			this._process('child_added', item);
 		},
 

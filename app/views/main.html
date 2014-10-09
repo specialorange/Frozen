@@ -13,40 +13,52 @@
 
 
         <div class="collapse navbar-collapse" id="header-navbar-collapse">
-          <ul class="nav navbar-nav">
-            <button type="button" disabled="" class="btn navbar-btn btn-sm btn-success" green=""></button>
-            <a class="btn navbar-btn btn-sm btn-warning" yellow=""></a>
-            <div class="hidden row" id="yellow-popover-content">
-              <table class="table table-condensed">
-                <thead>
-                  <th>Item</th> 
-                  <th>MM</th>
-                  <th>Expires On</th>
-                </thead>
-                <tr ng-repeat="item in items | itemFilter | yellowItems">
-                    <td class="col-md-6">{{item.description}}</td>
-                    <td class="col-md-2">{{item.measurement}}</td>
-                    <td class="col-md-4">{{item.expires | amDateFormat: 'MM/DD/YYYY'}}</td>
-                </tr>
-              </table>
+          <div class="navbar-left">
+            <ul class="nav navbar-nav">
+              <button type="button" disabled="" class="btn navbar-btn btn-sm btn-success" green=""></button>
+              <a class="btn navbar-btn btn-sm btn-warning" yellow=""></a>
+              <div class="hidden row" id="yellow-popover-content">
+                <table class="table table-condensed">
+                  <thead>
+                    <th>Item</th> 
+                    <th>MM</th>
+                    <th>Expires On</th>
+                  </thead>
+                  <tr ng-repeat="item in items | yellowItems">
+                      <td class="col-md-6">{{item.description()}}</td>
+                      <td class="col-md-2">{{item.measurement()}}</td>
+                      <td class="col-md-4">
+                        <p ng-repeat="(added, expires) in yellowDates(item)">{{expires | amDateFormat: 'MM/DD/YYYY'}}</p>
+                      </td>
+                  </tr>
+                </table>
+              </div>
+              <button type="button" class="btn navbar-btn btn-sm btn-danger" red=""></button>
+            </ul>
+          </div>
+
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="search.data.description">
             </div>
-            <button type="button" class="btn navbar-btn btn-sm btn-danger" red=""></button>
-          </ul>
+          </form>
         </div>
       </div>
     </nav>
   </header>
 
-<div class="container-fluid">
+<!-- <div class="container-fluid"> -->
+<div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
+    <!-- <div class="col-md-8"> -->
       <table class="table table-condensed">
         <thead>
           <th>Item</th>
           <th>Measurement</th>
+          <th>Quantity</th>
           <th>Expires</th>
           <th>Added</th>
-          <th></th>
           <th></th>
         </thead>
         <tr>
@@ -55,9 +67,19 @@
                 <label class="sr-only" for="descriptionInput">Description</label>
                 <input type="text" class="form-control" id="descriptionInput" ng-model="newDescription" placeholder="Item Description">
             </td>
-            <td class="form-group col-md-2">
+            <td class="form-group col-md-1">
                 <label class="sr-only" for="measurementInput">Measurement</label>
-                <input type="date" class="form-control" id="measurementInput" ng-model="newMeasurement" placeholder="Measurement">
+                <input type="date" class="form-control" id="measurementInput" ng-model="newMeasurement" placeholder="Measure.">
+            </td>
+            <td class="form-group col-md-2">
+              <div class="input-group">
+                <label class="sr-only" for="quantityInput">Quantity</label>
+                <input type="date" class="form-control" id="quantityInput" ng-model="newQuantity" placeholder="Quantity" ng-focus="prepopulateQuantity()">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="quantityUp()"></button>
+                  <button type="button" class="btn btn-default glyphicon glyphicon-minus" ng-click="quantityDown()" ng-disabled="!newQuantity || (newQuantity <= 1)"></button>
+                </div>
+              </div>
             </td>
             <td class="form-group col-md-2">
                 <label class="sr-only" for="expiresInput">Expires</label>
@@ -65,22 +87,27 @@
             </td>
             <td class="form-group col-md-2">
                 <label class="sr-only" for="addedInput">Added</label>
-                <input type="date" class="form-control" id="addedInput" ng-model="newAdded" placeholder="Added">
+                <input type="date" class="form-control" id="addedInput" ng-model="newAdded" placeholder="Added" ng-focus="prepopulateAddedDate()">
             </td>
-            <td class="form-group col-md-3">
+            <td class="form-group col-md-2">
               <button type="submit" ng-click="addItem()" class="btn btn-default glyphicon glyphicon-plus"></button>
             </td>
           </form>
         </tr>
-        <tr ng-repeat="item in items">
+        <tr ng-repeat="(id, item) in items | filter:search">
           <form editable-form name="rowform">
-            <td class="col-md-4">
-              <span editable-text="item.data.description" e-name="description" e-form="rowform" e-required>
+            <td class="col-md-3">
+              <span editable-text="item.data.description" buttons="no" onaftersave="saveItem(item)">
                 {{ item.description() || 'empty' }}
               </span>
             </td>
-            <td class="col-md-2">{{item.measurement()}}</td>
-            <td class="col-md-2">{{item.expires() | amDateFormat: 'MM/DD/YYYY'}} <span style="font-size: 200%; line-height: 50%; vertical-align: middle;" ng-class="{'text-warning': item.isYellow(), 'text-danger': item.isRed(), 'hidden': item.isGreen()}">&bull;</span></td>
+            <td class="col-md-1">
+              <span editable-text="item.data.measurement" buttons="no" onaftersave="saveItem(item)">
+                {{item.measurement()}}
+              </span>
+            </td>
+            <td class="col-md-2">{{item.quantity()}}</td>
+            <td class="col-md-2">{{item.expires() | amDateFormat: 'MM/DD/YYYY'}} <span style="font-size: 200%; line-height: 50%; vertical-align: middle;" ng-class="bulletExpiryClass(item)">&bull;</span></td>
             <td class="col-md-2">{{item.added() | amDateFormat: 'MM/DD/YYYY'}}</td>
             <td class="col-md-2">
               <button type="button" class="btn btn-xs btn-default glyphicon glyphicon-minus" ng-click="removeItem(item)"></button>
@@ -103,8 +130,8 @@
         </tfoot>
       </table>
     </div>
-    <div class="col-md-4">
-  <form class="form-inline" style="width: 100%">
+    <!-- <div class="col-md-4"> -->
+<!--   <form class="form-inline" style="width: 100%">
     <div class="list-group">
       <div class="list-group-item">
         <h4 class="list-group-item-heading">Filter</h4>
@@ -134,7 +161,7 @@
         <p></p>
       </div>
     </div>
-  </form>
-</div>
+  </form> -->
+<!-- </div> -->
   </div>
 </div>

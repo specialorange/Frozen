@@ -23,14 +23,14 @@ header .container {
 	padding-right: 0;
 }
 
-header .navbar .navbar-nav {
-  display: inline-block;
-  float: none;
-}
+// header .navbar .navbar-nav {
+//   display: inline-block;
+//   float: none;
+// }
 
-header .navbar .navbar-collapse {
-  text-align: center;
-}
+// header .navbar .navbar-collapse {
+//   text-align: center;
+// }
 
 tfoot {
 	border-top: 2px solid #DDD;
@@ -53,6 +53,10 @@ tfoot {
 
 #new-item-form .btn {
     position: static;
+}
+
+.glyphicon {
+  top: 0 !important;
 }
 
 table.table tr td div.item-actions { display:none;}
