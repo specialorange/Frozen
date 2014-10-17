@@ -1,0 +1,10 @@
+<div class="input-group">
+  <!-- <label class="sr-only" for="quantityInput">Quantity</label> -->
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default glyphicon glyphicon-minus" ng-click="quantityDown()" ng-disabled="!quantity || (quantity <= 1)"></button>
+  </span>
+  <input type="text" class="form-control text-center" id="quantityInput" ng-model="quantity" placeholder="Quantity" ng-focus="validateQuantity()" ng-blur="validateQuantity()">
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="quantityUp()"></button>
+  </span>
+</div>

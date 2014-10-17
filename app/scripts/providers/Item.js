@@ -6,7 +6,6 @@ angular.module('frozenApp')
 .factory('Item', function($firebaseUtils) {
   function Item(snapshot) {
     this.$id = snapshot.name();
-    this.$quantity = 0;
     this.$now = moment();
     this.$twoWeeksFromToday = moment(this.$now).add('days', 14);
 
@@ -43,6 +42,12 @@ angular.module('frozenApp')
     },
     added: function() {
       return moment(this.$added);
+    },
+
+    // MODIFIERS
+
+    addDate: function(added, expires) {
+      this.data.dates[added]  = expires;
     },
 
     // DESCRIPTIVE FUNCTIONS
@@ -86,6 +91,8 @@ angular.module('frozenApp')
       // apply changes to this.data instead of directly on `this`
       // snapshot.val() is the data firebase gives back for the associated record
       this.data = snapshot.val();
+
+      this.$quantity = 0;
 
       // recalculate expiry and added date
       var expires;

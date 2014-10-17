@@ -62,6 +62,10 @@ tfoot {
 table.table tr td div.item-actions { display:none;}
 table.table tr:hover td div.item-actions { display:inline-block;}
 
+.editable-click {
+  cursor: pointer;
+}
+
 // header {
 // 	width: 100%;
 // 	background: #333;

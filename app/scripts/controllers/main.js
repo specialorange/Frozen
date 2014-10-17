@@ -1,6 +1,6 @@
 'use strict';
 
-/* globals moment */
+/* globals moment, ItemUtils */
 
 /**
  * @ngdoc function
@@ -21,26 +21,47 @@ angular.module('frozenApp')
     window.$$$scope = $scope;
 
     $scope.addItem = function() {
-        var item = {
-            description: $scope.newDescription.trim(),
-            measurement: $scope.newMeasurement.trim(),
-            dates: {}
-        };
+        if (!$scope.newDescription.length || !$scope.newMeasurement.length || !$scope.newExpires.length ||!$scope.newAdded.length) {
+            return;
+        }
 
         var expires = moment($scope.newExpires.trim()).format('YYYY-MM-DD');
         var added = moment($scope.newAdded.trim()).format('YYYY-MM-DD');
 
+        var description = $scope.newDescription.trim();
+        var measurement = $scope.newMeasurement.trim();
+
+        // check if a similar item already exists
+
+        var item;
+
+        for (var key in $scope.items) {
+            item = $scope.items.$getRecord(key);
+            console.log(item);
+            if (item.description() == description && item.measurement() == measurement) {
+                item.addDate(added, expires);
+                $scope.items.$save(item);
+                return;
+            }
+        }
+
+        // add a new item since a similar one doesn't exist
+
+        var item = {
+            description: description,
+            measurement: measurement,
+            dates: {}
+        };
+
         item.dates[added] = expires;
         
-        if (!$scope.newDescription.length || !$scope.newMeasurement.length || !$scope.newExpires.length ||!$scope.newAdded.length) {
-            return;
-        }
         $scope.items.$add(item);
-        // $scope.new-description = '';
-        // $scope.new-measurement = '';
-        // $scope.new-quantity = '';
-        // $scope.new-expires = '';
-        // $scope.new-added = '';
+
+        $scope.newDescription = '';
+        $scope.newMeasurement = '';
+        $scope.newQuantity = '';
+        $scope.newExpires = '';
+        $scope.newAdded = '';
     };
 
     $scope.saveItem = function(item) {
@@ -52,7 +73,30 @@ angular.module('frozenApp')
         $scope.items.$remove(item);
     };
 
-    $scope.bulletExpiryClass = function(item) {
+    $scope.removeDate = function(id, addedDate) {
+        console.log(addedDate);
+        console.log(id);
+        delete $scope.items.$getRecord(id).data.dates[moment(addedDate).format('YYYY-MM-DD')];
+        $scope.items.$save(id);
+    };
+
+    $scope.addAnother = function(item) {
+        $scope.newDescription = item.description();
+        $scope.newMeasurement = item.measurement();
+        $scope.newQuantity = 1;
+        $scope.prepopulateAddedDate();
+        $('#expiresInput').focus();
+    };
+
+    $scope.clearNewItemInputs = function() {
+        $scope.newDescription = "";
+        $scope.newMeasurement = "";
+        $scope.newQuantity = "";
+        $scope.newAdded = "";
+        $scope.newExpires = "";
+    };
+
+    $scope.bulletExpiryClassItem = function(item) {
         console.log(item);
         if (item.hasRed()) {
             return 'text-danger';
@@ -63,20 +107,18 @@ angular.module('frozenApp')
         }
     };
 
-    $scope.yellowDates = function(item) {
-        var dates = item.data.dates;
-        var yellow = {};
-        var expires;
+    $scope.bulletExpiryClassDate = function(item, date) {
 
-        for (var added in dates) {
-            expires = dates[added];
-            if (item._yellowDate(expires)) {
-                yellow[added] = expires;
-            }
+        if (item._redDate(date)) {
+            return 'text-danger';
+        } else if (item._yellowDate(date)) {
+            return 'text-warning';
+        } else {
+            return 'hidden';
         }
-
-        return yellow;
     };
+
+    $scope.yellowDates = ItemUtils.yellowDates;
 
     $scope.prepopulateAddedDate = function() {
         if (!$scope.newAdded) {
@@ -90,29 +132,9 @@ angular.module('frozenApp')
         }
     };
 
-    $scope.quantityUp = function() {
-        if (!$scope.newQuantity) {
-            $scope.newQuantity = 1;
-        } else {
-            if (($scope.newQuantity) < 1) {
-                $scope.newQuantity = 1;
-            } else {
-                $scope.newQuantity = $scope.newQuantity + 1;
-            }
-        }
-    };
-
-    $scope.quantityDown = function() {
-        if (!$scope.newQuantity) {
-            $scope.newQuantity = 1;
-        } else {
-            if (($scope.newQuantity - 1) < 1) {
-                $scope.newQuantity = 1;
-            } else {
-                $scope.newQuantity = $scope.newQuantity - 1;
-            }
-        }
-    };
+    $scope.showAllDates = function(id) {
+        $('')
+    }
 
 
     /* OLD CODE BELOW THIS LINE */

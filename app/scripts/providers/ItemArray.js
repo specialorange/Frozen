@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals ItemUtils */
+
 angular.module('frozenApp')
 .factory('ItemArray', function($FirebaseArray, Item) {
 	return $FirebaseArray.$extendFactory({
@@ -13,6 +15,28 @@ angular.module('frozenApp')
 		$$updated: function(snapshot) {
 			// snapshot.name() is the firebase key
 			this.$getRecord(snapshot.name()).update(snapshot);
+		},
+
+		redCount: function() {
+			
+		},
+
+		yellowCount: function() {
+			var yellow = 0;
+			var dates;
+			angular.forEach(this.$list, function(item){
+				dates = ItemUtils.yellowDates(item);
+				for (var date in dates) {
+				    if (dates.hasOwnProperty(date)) {
+				       yellow++;
+				    }
+				}
+			});
+			return yellow;
+		},
+
+		greenCount: function() {
+
 		}
 	});
 });
